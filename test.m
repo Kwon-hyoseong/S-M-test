@@ -15,13 +15,13 @@ dp.textColor = [0 0 0];        % 텍스트 색 (검정)
 d = Screen('Resolution', dp.screenNum);
 dp.resolution  = [d.width, d.height];        % [W H] px
 dp.frameRate   = d.hz;                        % Hz
-dp.aspectRatio = dp.resolution(2)/dp.resolution(1);
+%dp.aspectRatio = dp.resolution(2)/dp.resolution(1);
 
 % 픽셀-각도 변환(ppd, pixels per degree)
 dp.ppd = dp.resolution(1) / ((2*atan(dp.width/(2*dp.dist)))*180/pi);
 
-% rect = []; if want FullScreen
-rect = [0 0 800 600];
+rect = []; %if want FullScreen
+%rect = [0 0 800 600];
 [dp.wPtr, dp.wRect] = PsychImaging('OpenWindow', dp.screenNum, dp.bkColor, rect, [], [], 0);
 
 % --- after openwindow : real params 값 update ---
@@ -53,8 +53,8 @@ targetMeanDotSize = min(max(targetMeanDotSize, dotSizeParams.minSize), dotSizePa
 dotSize = generateDotSizes(numDots, targetMeanDotSize, dotSizeParams);
 
 % Define the rectangular area centered on the screen
-areaWidth  = 400;
-areaHeight = 300;
+areaWidth  = 400;  % 
+areaHeight = 300; % 
 areaRect   = CenterRectOnPoint([0 0 areaWidth areaHeight], dp.cx, dp.cy);
 
 % Calculate the height of the aperture based on the defined rectangle
@@ -93,7 +93,7 @@ for frameIdx = 1:numFrames
     xy = [xPos; yPos];
 
     % 도트 그리기 (절대좌표 사용을 위해 center 인수로 [0 0] 전달)
-    ScreenDrawDots(dp.wPtr, xy, dotSize, dotColor, [0 0], 2);
+    Screen('DrawDots', dp.wPtr, xy, dotSize, dotColor, [0 0], 2);
 
     vbl = Screen('Flip', dp.wPtr, vbl + 0.5 * dp.ifi);
 
