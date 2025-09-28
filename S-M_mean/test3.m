@@ -70,7 +70,7 @@ try
     % 자극 이동 여부 조합 (T1/T2)
     stimCombos = {'MM','SM','MS','SS'};
 
-    % 개구(사각형) 파라미터 (°)
+    % aperture(사각형) 파라미터 (°)
     aperture.centerDeg = [0 0];          % 화면 중앙 기준 (°)
     aperture.widthDeg  = 12;             % 가로 폭 (°)
     aperture.heightDeg = 9;              % 세로 높이 (°)
@@ -141,7 +141,8 @@ catch ME
     rethrow(ME);
 end
 
-%% --- Local helper functions ---
+%% --- Local help functions ---
+% ApertureEdges 안에서만 stimuli 제시
 function aperture = updateApertureEdges(aperture)
 halfWidth  = aperture.widthDeg / 2;
 halfHeight = aperture.heightDeg / 2;
