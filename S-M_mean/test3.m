@@ -21,11 +21,13 @@ dp.frameRate   = d.hz;                        % Hz
 dp.ppd = dp.resolution(1) / ((2*atan(dp.width/(2*dp.dist)))*180/pi);
 
 rect = [];
+%rect = [0 0 800 600];
+
 
 try
     [dp.wPtr, dp.wRect] = PsychImaging('OpenWindow', dp.screenNum, dp.bkColor, rect, [], [], 0);
 
-    % --- after openwindow : real params 값 update ---
+    % --- after openwindow : real params update ---
     Screen('BlendFunction', dp.wPtr, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     dp.ifi        = Screen('GetFlipInterval', dp.wPtr);
     dp.frameRate  = round(1/dp.ifi);        % 실제 주사율
@@ -40,12 +42,12 @@ try
     dotParams.minSizeDeg        = 0.4;   % 최소 크기 제한 (°)
     dotParams.maxSizeDeg        = 1.8;   % 최대 크기 제한 (°)
     dotParams.gToleranceDeg     = 0.001;  % 허용 오차 (°)
-    dotParams.jitterStdRatio    = 0.15;  % 개별 도트 크기 산출 시 표준편차 비율
+    dotParams.jitterStdRatio    = 0.15;  % 개별 dot size 산출 시 표준편차 비율
     dotParams.perceptualExponent = 0.76; % 지각 척도 지수
     dotParams.meanDiffLevels    = [0.06 0.12 0.18 0.24 0.30 0.36]; % 지각 척도 상 평균 차이 단계
-    dotParams.safetyMarginDeg   = 0.02;  % 비겹침 검사 시 여유 (°)
+    dotParams.safetyMarginDeg   = 0.05;  % 비겹침 검사 시 여유 (°)
 
-    % small:large 비율 조합 (합계 8개 도트)
+    % small:large 비율 조합 (합계 8개 dot)
     ratioAssignments = {
         struct('label','S6L2_vs_S2L6','t1Counts',[6 2],'t2Counts',[2 6]);
         struct('label','S5L3_vs_S3L5','t1Counts',[5 3],'t2Counts',[3 5]);
@@ -57,12 +59,12 @@ try
 
     % Motion configuration (deg/sec)
     motionParams.direction        = 'up';    % 'up', 'down', 'left', 'right'
-    motionParams.speedDegPerSec   = 1.5;     % 이동 속도 (°/sec)
+    motionParams.speedDegPerSec   = 3 ;     % 이동 속도 (°/sec)
 
-    % Timing configuration (ms 단위)
-    timingParams.stimDurationMs    = 500;   % T1/T2 자극 제시 시간
-    timingParams.isiDurationMs     = 200;   % T1-T2 사이 공백
-    timingParams.postTrialMs       = 500;   % T2 이후 공백
+    % Timing configuration (ms)
+    timingParams.stimDurationMs    = 520;   % T1/T2 자극 제시 시간
+    timingParams.isiDurationMs     = 1000;   % T1-T2 사이 공백
+    timingParams.postTrialMs       = 1000;   % T2 이후 공백
 
     % 자극 조합 반복 횟수 (모든 조합 × n)
     comboRepeats = 1;
