@@ -50,11 +50,11 @@ dp.screenNum = max(Screen('Screens'));
 
 dp.dist   = 55;                 % 관찰자와 화면 사이 거리(cm)
 dp.width  = 60;                 % 사용 중인 디스플레이의 가로 폭(cm)
-dp.bkColor   = [0.5 0.5 0.5];   % 화면 배경색 (RGB, 0~1 정규화)
-dp.textColor = [1 1 1];         % 안내 문구 텍스트 색상 (RGB, 0~1 정규화)
-dp.textFont  = 'Malgun Gothic'; % 안내 문구 폰트 이름
-dp.textSize  = 20;              % 안내 문구 글자 크기(pt)
-dp.textLineSpacingMultiplier = 3; % 안내 문구 줄 간격 배율(기본 1.2보다 넓게 설정)
+dp.bkColor   = [0.5 0.5 0.5];  
+dp.textColor = [1 1 1];         
+dp.textFont  = 'Malgun Gothic'; 
+dp.textSize  = 20;              
+dp.textLineSpacingMultiplier = 3; 
 dp.responseInstructions = {
     double('왼쪽 방향키: T1 평균이 더 큽니다');
     double('오른쪽 방향키: T2 평균이 더 큽니다')
