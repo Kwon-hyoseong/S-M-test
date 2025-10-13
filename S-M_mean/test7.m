@@ -54,6 +54,14 @@ dp.dist   = 55;
 dp.width  = 60;
 dp.bkColor   = [0.5 0.5 0.5];
 dp.textColor = [0 0 0];
+dp.textFont  = 'Arial';
+dp.textSize  = 32;
+dp.responseInstructions = {
+    '응답하세요!';
+    '왼쪽 방향키: T1 평균이 더 큽니다';
+    '오른쪽 방향키: T2 평균이 더 큽니다'
+};
+dp.responseTimerFormat = '남은 시간: %d ms';
 dp.skipChecks = 1;
 
 try
