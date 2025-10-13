@@ -1,7 +1,7 @@
 function make_fixation(dp,fixSize,color,lineWidth)
 
 if ~exist('fixSize','var')
-    fixSize = 10;
+    fixSize = 20;
 end
 
 if ~exist('lineWidth','var')
@@ -9,7 +9,7 @@ if ~exist('lineWidth','var')
 end
 
 if ~exist('color','var')
-    color = [0 0 0];
+    color = [1 1 1];
 end
 
 Screen('DrawLine', dp.wPtr, color, dp.cx-fixSize/2, dp.cy, dp.cx+fixSize/2, dp.cy, lineWidth)

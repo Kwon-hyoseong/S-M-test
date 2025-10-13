@@ -7,45 +7,45 @@ kb = struct();
 kb.useKbQueueCheck = 0;
 kb = init_keyboard(kb);
 
-%%
-% 학번 입력 및 실험 종류 선택
-studentID = input('참가자 번호를 입력해주세요: ', 's');
-
-validGender = false;
-while ~validGender
-    gender = input('성별을 입력해주세요 (M/F): ', 's');
-    if strcmpi(gender, 'M') || strcmpi(gender, 'F')
-        validGender = true;
-    else
-        disp('Invalid input. Please enter M for Male or F for Female.');
-    end
-end
-
-age = input('만나이를 입력해주세요: ');
-
-validHand = false;
-while ~validHand
-    hand = input('주로 사용하는 손은 무엇인가요? (R/L): ', 's');
-    if strcmpi(hand, 'R') || strcmpi(hand, 'L')
-        validHand = true;
-    else
-        disp('Invalid input. Please enter R for Right hand or L for Left hand.');
-    end
-end
-
-validcolor = false;
-while  ~validcolor
-    color = input('시력이상 또는 색약이 없으신가요?(Y/N): ','s');
-    if strcmpi(color,'Y') || strcmpi(color,'N')
-        validcolor = true;
-    else
-        disp('Invalid input. Please enter Y for normal or N.')
-    end
-end
-
-saveFileName = ['results_Exp_' studentID '_S-M_mean.mat'];
-
-result.info = struct('gender', gender, 'age', age, 'hand', hand, 'color', color); % gender와 age와 hand를 하나의 필드로 저장
+% %%
+% % 학번 입력 및 실험 종류 선택
+% studentID = input('참가자 번호를 입력해주세요: ', 's');
+% 
+% validGender = false;
+% while ~validGender
+%     gender = input('성별을 입력해주세요 (M/F): ', 's');
+%     if strcmpi(gender, 'M') || strcmpi(gender, 'F')
+%         validGender = true;
+%     else
+%         disp('Invalid input. Please enter M for Male or F for Female.');
+%     end
+% end
+% 
+% age = input('만나이를 입력해주세요: ');
+% 
+% validHand = false;
+% while ~validHand
+%     hand = input('주로 사용하는 손은 무엇인가요? (R/L): ', 's');
+%     if strcmpi(hand, 'R') || strcmpi(hand, 'L')
+%         validHand = true;
+%     else
+%         disp('Invalid input. Please enter R for Right hand or L for Left hand.');
+%     end
+% end
+% 
+% validcolor = false;
+% while  ~validcolor
+%     color = input('시력이상 또는 색약이 없으신가요?(Y/N): ','s');
+%     if strcmpi(color,'Y') || strcmpi(color,'N')
+%         validcolor = true;
+%     else
+%         disp('Invalid input. Please enter Y for normal or N.')
+%     end
+% end
+% 
+% saveFileName = ['results_Exp_' studentID '_S-M_mean.mat'];
+% 
+% result.info = struct('gender', gender, 'age', age, 'hand', hand, 'color', color); % gender와 age와 hand를 하나의 필드로 저장
 
 %% Display settings
 dp.screenNum = max(Screen('Screens'));
