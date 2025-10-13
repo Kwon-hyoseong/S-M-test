@@ -56,18 +56,20 @@ end
 % Initialize Keyboards
 if ~config.useKbQueueCheck
     [kb.keyIsDown, kb.secs, kb.keyCode] = KbCheck(-1);
-    oldenablekeys = RestrictKeysForKbCheck([kb.escKey, kb.leftKey, kb.rightKey, kb.spaceKey, kb.pKey]);
+    RestrictKeysForKbCheck([kb.escKey, kb.leftKey, kb.rightKey]);
 else
     kb.devices = PsychHID('Devices');
     kb.keysOfInterest=zeros(1,256);
 %     kb.keysOfInterest(KbName({'r', 'g', 'b', 'y', 't', 'a'})) = 1;
-    kb.keysOfInterest(KbName({'space','1','2','1!','2@','escape'})) = 1;
+    kb.keysOfInterest([kb.leftKey, kb.rightKey, kb.escKey]) = 1;
     KbQueueCreate([], kb.keysOfInterest);
     % Perform some other initializations
     KbQueueStart;
-    KbQueueCheck;
+    KbQueueFlush;
 end
 
 % Initialize Sound
 InitializePsychSound;
 Snd('Close');
+
+kb.useKbQueueCheck = config.useKbQueueCheck;
