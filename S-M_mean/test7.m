@@ -54,7 +54,7 @@ dp.bkColor   = [0.5 0.5 0.5];   % 화면 배경색 (RGB, 0~1 정규화)
 dp.textColor = [1 1 1];         % 안내 문구 텍스트 색상 (RGB, 0~1 정규화)
 dp.textFont  = 'Malgun Gothic'; % 안내 문구 폰트 이름
 dp.textSize  = 20;              % 안내 문구 글자 크기(pt)
-dp.textLineSpacingMultiplier = 1.5; % 안내 문구 줄 간격 배율(기본 1.2보다 넓게 설정)
+dp.textLineSpacingMultiplier = 3; % 안내 문구 줄 간격 배율(기본 1.2보다 넓게 설정)
 dp.responseInstructions = {
     double('왼쪽 방향키: T1 평균이 더 큽니다');
     double('오른쪽 방향키: T2 평균이 더 큽니다')
@@ -94,8 +94,8 @@ try
     %% Timing configuration (ms)
     timingParams.fixationMs     = 300;  % 응시점 제시 시간(ms)
     timingParams.stimDurationMs = 500;  % 각 자극 제시 시간(ms)
-    timingParams.isiDurationMs  = 200;  % 자극 사이 공백(Inter Stimulus Interval) 지속 시간(ms)
-    timingParams.postTrialMs    = 1500; % 반응 대기 및 안내 문구 표시 시간(ms)
+    timingParams.isiDurationMs  = 1000; % 자극 사이 공백(Inter Stimulus Interval) 지속 시간(ms)
+    timingParams.postTrialMs    = 1000; % 반응 대기 및 안내 문구 표시 시간(ms)
 
     comboRepeats = 1;                   % 자극 조합 반복 횟수
     stimCombos = {'MM','SM','MS','SS'}; % 움직임/정지 조합(M: 움직임, S: 정지)
