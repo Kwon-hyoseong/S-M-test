@@ -11,6 +11,8 @@ if durationMs <= 0
     return;
 end
 
+instructionLines = prepareInstructionLines(dp);
+
 startTime = GetSecs;
 deadline = startTime + durationMs / 1000;
 
@@ -24,16 +26,19 @@ firstFrame = true;
 vbl = 0;
 
 while GetSecs < deadline && ~response.wasAborted && ~response.didRespond
-    remaining = max(0, deadline - GetSecs);
-    remainingMs = ceil(remaining * 1000);
-
     Screen('FillRect', dp.wPtr, dp.bkColor);
 
-    instruction = sprintf('응답하세요!\n←: T1 평균이 더 큽니다\n→: T2 평균이 더 큽니다');
-    DrawFormattedText(dp.wPtr, instruction, 'center', dp.cy - dp.ppd, dp.textColor, [], [], [], 1.5);
+    ensureTextFont(dp);
+    textSize = ensureTextSize(dp);
 
-    timerText = sprintf('남은 시간: %d ms', remainingMs);
-    DrawFormattedText(dp.wPtr, timerText, 'center', dp.cy + dp.ppd, dp.textColor);
+    lineSpacingPx = max(1, round(1.2 * textSize));
+    baseY = dp.cy - 1.5 * dp.ppd;
+
+    for lineIdx = 1:numel(instructionLines)
+        lineText = instructionLines{lineIdx};
+        lineY = baseY + (lineIdx - 1) * lineSpacingPx;
+        drawCenteredText(dp.wPtr, lineText, dp.cx, lineY, dp.textColor);
+    end
 
     if firstFrame
         vbl = Screen('Flip', dp.wPtr);
@@ -81,4 +86,67 @@ response.didRespond = true;
 response.keyCode = keyCode;
 response.keyName = keyName;
 response.rt = pressTime - startTime;
+end
+
+function instructionLines = prepareInstructionLines(dp)
+if isfield(dp, 'responseInstructions') && ~isempty(dp.responseInstructions)
+    if iscell(dp.responseInstructions)
+        rawLines = dp.responseInstructions(:);
+    else
+        rawLines = cellstr(dp.responseInstructions);
+    end
+else
+    rawLines = {
+        '왼쪽 방향키: T1 평균이 더 큽니다';
+        '오른쪽 방향키: T2 평균이 더 큽니다'
+    };
+end
+
+instructionLines = cell(size(rawLines));
+for iLine = 1:numel(rawLines)
+    instructionLines{iLine} = normalizeLine(rawLines{iLine});
+end
+end
+
+function lineOut = normalizeLine(lineIn)
+if isnumeric(lineIn)
+    lineOut = lineIn;
+    return;
+end
+
+if isstring(lineIn)
+    lineIn = char(lineIn);
+elseif iscell(lineIn)
+    lineIn = char(lineIn{:});
+end
+
+if ischar(lineIn)
+    lineOut = double(lineIn);
+else
+    lineOut = double(string(lineIn));
+end
+end
+
+function textSize = ensureTextSize(dp)
+if isfield(dp, 'textSize') && ~isempty(dp.textSize)
+    Screen('TextSize', dp.wPtr, dp.textSize);
+end
+
+textSize = Screen('TextSize', dp.wPtr);
+if textSize <= 0
+    textSize = 24;
+    Screen('TextSize', dp.wPtr, textSize);
+end
+end
+
+function ensureTextFont(dp)
+if isfield(dp, 'textFont') && ~isempty(dp.textFont)
+    Screen('TextFont', dp.wPtr, dp.textFont);
+end
+end
+
+function drawCenteredText(winPtr, textString, centerX, yPos, color)
+bounds = Screen('TextBounds', winPtr, textString);
+textX = centerX - RectWidth(bounds) / 2;
+Screen('DrawText', winPtr, textString, textX, yPos, color);
 end
