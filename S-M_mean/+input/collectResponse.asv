@@ -38,7 +38,7 @@ while GetSecs < deadline && ~response.wasAborted && ~response.didRespond
     end
 
     lineSpacingPx = max(1, round(lineSpacingMultiplier * textSize));
-    baseY = dp.cy - 1.5 * dp.ppd; % 간격 조정
+    baseY = dp.cy - 1.5 * dp.ppd; 
 
     for lineIdx = 1:numel(instructionLines)
         lineText = instructionLines{lineIdx};

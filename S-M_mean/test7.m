@@ -1,5 +1,3 @@
-clear all;
-clc;
 AssertOpenGL;
 KbName('UnifyKeyNames');
 
@@ -50,12 +48,13 @@ kb = init_keyboard(kb);
 %% Display settings
 dp.screenNum = max(Screen('Screens'));
 
-dp.dist   = 55;
-dp.width  = 60;
-dp.bkColor   = [0.5 0.5 0.5];
-dp.textColor = [1 1 1];
-dp.textFont  = 'Malgun Gothic';
-dp.textSize  = 20;
+dp.dist   = 55;                 % 관찰자와 화면 사이 거리(cm)
+dp.width  = 60;                 % 사용 중인 디스플레이의 가로 폭(cm)
+dp.bkColor   = [0.5 0.5 0.5];   % 화면 배경색 (RGB, 0~1 정규화)
+dp.textColor = [1 1 1];         % 안내 문구 텍스트 색상 (RGB, 0~1 정규화)
+dp.textFont  = 'Malgun Gothic'; % 안내 문구 폰트 이름
+dp.textSize  = 20;              % 안내 문구 글자 크기(pt)
+dp.textLineSpacingMultiplier = 1.5; % 안내 문구 줄 간격 배율(기본 1.2보다 넓게 설정)
 dp.responseInstructions = {
     double('왼쪽 방향키: T1 평균이 더 큽니다');
     double('오른쪽 방향키: T2 평균이 더 큽니다')
@@ -67,49 +66,49 @@ try
     HideCursor;
     ListenChar(2); 
     %% Dot configuration
-    dotParams.smallSizeDeg = 0.7;
-    dotParams.largeSizeDeg = 1.3;
-    dotParams.targetMeanDeg     = 1.0;
-    dotParams.meanJitterDeg     = 0.05;
-    dotParams.minSizeDeg        = 0.4;
-    dotParams.maxSizeDeg        = 1.8;
-    dotParams.gToleranceDeg     = 0.001;
-    dotParams.jitterStdRatio    = 0.15;
-    dotParams.perceptualExponent = 0.76;
-    dotParams.meanDiffLevels    = [0.06 0.12 0.18 0.24 0.30 0.36];
-    dotParams.safetyMarginDeg   = 0.05;
+    dotParams.smallSizeDeg = 0.7;              % 작은 점 집단의 평균 지름(시야각)
+    dotParams.largeSizeDeg = 1.3;              % 큰 점 집단의 평균 지름(시야각)
+    dotParams.targetMeanDeg     = 1.0;         % 목표 평균 지름(시야각)
+    dotParams.meanJitterDeg     = 0.05;        % 목표 평균에 추가되는 랜덤 지터 범위(시야각)
+    dotParams.minSizeDeg        = 0.4;         % 생성 가능한 점의 최소 지름(시야각)
+    dotParams.maxSizeDeg        = 1.8;         % 생성 가능한 점의 최대 지름(시야각)
+    dotParams.gToleranceDeg     = 0.001;       % 점 생성 시 허용 오차(시야각)
+    dotParams.jitterStdRatio    = 0.15;        % 지터 표준편차에 대한 비율
+    dotParams.perceptualExponent = 0.76;       % 지각적 크기 변환에 사용하는 지수 값
+    dotParams.meanDiffLevels    = [0.06 0.12 0.18 0.24 0.30 0.36]; % 두 자극 간 평균 차이 수준(시야각)
+    dotParams.safetyMarginDeg   = 0.05;        % 점이 경계에 겹치지 않도록 확보하는 안전 여유(시야각)
 
     ratioAssignments = {
-        struct('label','S6L2_vs_S2L6','t1Counts',[6 2],'t2Counts',[2 6]);
-        struct('label','S5L3_vs_S3L5','t1Counts',[5 3],'t2Counts',[3 5]);
-        struct('label','S3L5_vs_S5L3','t1Counts',[3 5],'t2Counts',[5 3]);
-        struct('label','S2L6_vs_S6L2','t1Counts',[2 6],'t2Counts',[6 2])
+        struct('label','S6L2_vs_S2L6','t1Counts',[6 2],'t2Counts',[2 6]); % 작은/큰 점 개수 조합(6:2 vs 2:6)
+        struct('label','S5L3_vs_S3L5','t1Counts',[5 3],'t2Counts',[3 5]); % 작은/큰 점 개수 조합(5:3 vs 3:5)
+        struct('label','S3L5_vs_S5L3','t1Counts',[3 5],'t2Counts',[5 3]); % 작은/큰 점 개수 조합(3:5 vs 5:3)
+        struct('label','S2L6_vs_S6L2','t1Counts',[2 6],'t2Counts',[6 2])  % 작은/큰 점 개수 조합(2:6 vs 6:2)
     };
 
-    numDots = sum(ratioAssignments{1}.t1Counts);
+    numDots = sum(ratioAssignments{1}.t1Counts); % 한 자극에 표시되는 전체 점 개수
 
     %% Motion configuration
-    motionParams.direction        = 'up';
-    motionParams.speedDegPerSec   = 1.5;
+    motionParams.direction        = 'up';    % 움직이는 자극의 이동 방향
+    motionParams.speedDegPerSec   = 1.5;     % 움직이는 자극의 속도(시야각/초)
 
     %% Timing configuration (ms)
-    timingParams.fixationMs     = 300;
-    timingParams.stimDurationMs = 500;
-    timingParams.isiDurationMs  = 200;
-    timingParams.postTrialMs    = 1500;
+    timingParams.fixationMs     = 300;  % 응시점 제시 시간(ms)
+    timingParams.stimDurationMs = 500;  % 각 자극 제시 시간(ms)
+    timingParams.isiDurationMs  = 200;  % 자극 사이 공백(Inter Stimulus Interval) 지속 시간(ms)
+    timingParams.postTrialMs    = 1500; % 반응 대기 및 안내 문구 표시 시간(ms)
 
-    comboRepeats = 1;
-    stimCombos = {'MM','SM','MS','SS'};
+    comboRepeats = 1;                   % 자극 조합 반복 횟수
+    stimCombos = {'MM','SM','MS','SS'}; % 움직임/정지 조합(M: 움직임, S: 정지)
 
-    apertureConfig.outer.centerDeg = [0 0];
-    apertureConfig.outer.widthDeg  = 12;
-    apertureConfig.outer.heightDeg = 9;
+    apertureConfig.outer.centerDeg = [0 0]; % 외곽 시야창 중심 위치(시야각)
+    apertureConfig.outer.widthDeg  = 12;    % 외곽 시야창 가로 길이(시야각)
+    apertureConfig.outer.heightDeg = 9;     % 외곽 시야창 세로 길이(시야각)
     apertureConfig.outer = geom.updateApertureEdges(apertureConfig.outer);
 
-    apertureConfig.paddingDeg = 1.0;
+    apertureConfig.paddingDeg = 1.0; % 외곽 시야창으로부터 내부 시야창까지의 여유 거리(시야각)
     apertureConfig.inner = geom.shrinkAperture(apertureConfig.outer, apertureConfig.paddingDeg);
 
-    epsDeg = 1 / dp.ppd;
+    epsDeg = 1 / dp.ppd; % 픽셀당 시야각 환산값
     fprintf('Estimated pixel pitch: %.4f°/pixel.\n', epsDeg);
     if dotParams.gToleranceDeg < 0.5 * epsDeg
         fprintf(['[경고] gTolerance가 디스플레이 해상도(%.4f°)보다 매우 작습니다. ' ...
