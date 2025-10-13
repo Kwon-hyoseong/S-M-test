@@ -16,7 +16,8 @@ dp.skipChecks = 1;
 
 try
     dp = OpenWindow(dp);
-
+    HideCursor;
+    ListenChar(2); 
     %% Dot configuration
     dotParams.smallSizeDeg = 0.7;
     dotParams.largeSizeDeg = 1.3;
